@@ -1,49 +1,55 @@
-# Day 02 - 4-bit Up Counter using Verilog
+# Day 02 - 4x1 Multiplexer using Verilog
 
 ## Objective
-Design and simulate a 4-bit synchronous up counter.
+Implement and simulate a 4x1 multiplexer using three modeling styles:
 
-## Signals
-- `clk` : clock input
-- `reset` : reset input
-- `count[3:0]` : 4-bit counter output
+- Behavioral Modeling
+- Dataflow Modeling
+- Gate-Level Modeling
 
-## Operation
-- When `reset = 1`, the counter is reset to `0000`.
-- When `reset = 0`, the counter increments on every positive edge of `clk`.
+## Inputs and Output
+- `in[3:0]` : four data inputs
+- `sel[1:0]` : 2-bit select input
+- `out` : selected output
+
+## Selection Table
+
+| sel | Output |
+|---|---|
+| 00 | in[0] |
+| 01 | in[1] |
+| 10 | in[2] |
+| 11 | in[3] |
 
 ## Files
-- `up_counter_4bit.v`
-- `up_counter_4bit_tb.v`
-- `waveform_counter_1.png`
-- `waveform_counter_2.png`
-- `waveform_counter_3.png`
+- `mux4x1_behavioral.v`
+- `mux4x1_dataflow.v`
+- `mux4x1_gatelevel.v`
+- `mux4x1_tb.v`
+- `waveform_behavioral.png`
+- `waveform_dataflow.png`
+- `waveform_gatelevel.png`
 
-## Compile
-
-```bash
-verilator --binary -Wall up_counter_4bit.v up_counter_4bit_tb.v --top-module up_counter_4bit_tb --timing --trace
-```
-
-## Run
+## Compile Example - Behavioral
 
 ```bash
-./obj_dir/Vup_counter_4bit_tb
+verilator --binary -Wall mux4x1_behavioral.v mux4x1_tb.v --top-module mux4x1_tb --timing --trace
+./obj_dir/Vmux4x1_tb
+gtkwave mux4x1.vcd
 ```
 
-## Open Waveform
-
-```bash
-gtkwave up_counter_4bit.vcd
-```
+For Dataflow or Gate-Level modeling, replace the instantiated module name inside `mux4x1_tb.v` with `mux4x1_dataflow` or `mux4x1_gatelevel`.
 
 ## Waveforms
 
-![Counter Waveform 1](waveform_counter_1.png)
+### Behavioral
+![Behavioral](waveform_behavioral.png)
 
-![Counter Waveform 2](waveform_counter_2.png)
+### Dataflow
+![Dataflow](waveform_dataflow.png)
 
-![Counter Waveform 3](waveform_counter_3.png)
+### Gate-Level
+![Gate-Level](waveform_gatelevel.png)
 
 ## Result
-The counter increments correctly on successive positive clock edges and the waveform was verified in GTKWave.
+The 4x1 MUX was implemented using multiple Verilog modeling styles and verified using GTKWave.

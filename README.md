@@ -1,86 +1,49 @@
-# Day 01 - 2-Input AND Gate using Verilog HDL
+# Day 02 - 4-bit Up Counter using Verilog
 
 ## Objective
+Design and simulate a 4-bit synchronous up counter.
 
-Design and simulate a 2-input AND gate using Verilog HDL, run the simulation with Verilator, and verify the output waveform using GTKWave.
+## Signals
+- `clk` : clock input
+- `reset` : reset input
+- `count[3:0]` : 4-bit counter output
 
-## Truth Table
-
-| A | B | out |
-|---|---|-----|
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 1 |
-
-## RTL Logic
-
-```verilog
-assign out = A & B;
-```
+## Operation
+- When `reset = 1`, the counter is reset to `0000`.
+- When `reset = 0`, the counter increments on every positive edge of `clk`.
 
 ## Files
-
-- `AND_GATE_design.v` - RTL design of the AND gate
-- `AND_GATE_tb.v` - Testbench
-- `waveform.png` - GTKWave simulation result
-- `dump_and_gate.vcd` - Generated after running the simulation
-
-## Tools Used
-
-- Verilog HDL
-- Verilator
-- GTKWave
-- Linux Terminal
+- `up_counter_4bit.v`
+- `up_counter_4bit_tb.v`
+- `waveform_counter_1.png`
+- `waveform_counter_2.png`
+- `waveform_counter_3.png`
 
 ## Compile
 
 ```bash
-verilator --binary -Wall AND_GATE_design.v AND_GATE_tb.v --top-module AND_GATE_tb --timing --trace
+verilator --binary -Wall up_counter_4bit.v up_counter_4bit_tb.v --top-module up_counter_4bit_tb --timing --trace
 ```
 
-## Run Simulation
+## Run
 
 ```bash
-./obj_dir/VAND_GATE_tb
+./obj_dir/Vup_counter_4bit_tb
 ```
 
 ## Open Waveform
 
-After running the simulation, the testbench creates:
-
-```text
-dump_and_gate.vcd
-```
-
-Open it with:
-
 ```bash
-gtkwave dump_and_gate.vcd
+gtkwave up_counter_4bit.vcd
 ```
 
-## Simulation Result
+## Waveforms
 
-The simulation verifies the expected AND gate behavior:
+![Counter Waveform 1](waveform_counter_1.png)
 
-| A | B | out |
-|---|---|-----|
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 1 |
+![Counter Waveform 2](waveform_counter_2.png)
 
-The output goes HIGH only when both inputs are HIGH.
+![Counter Waveform 3](waveform_counter_3.png)
 
-## GTKWave Output
-
-![AND Gate GTKWave](waveform.png)
-
-## What I Learned
-
-- Basic Verilog module structure
-- Implementing combinational logic in Verilog
-- Writing a simple Verilog testbench
-- Using `$monitor`, `$dumpfile`, and `$dumpvars`
-- Compiling and simulating with Verilator
-- Viewing and verifying digital waveforms using GTKWave
+## Result
+The counter increments correctly on successive positive clock edges and the waveform was verified in GTKWave.
